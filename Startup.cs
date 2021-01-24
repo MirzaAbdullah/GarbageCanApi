@@ -56,6 +56,8 @@ namespace GarbageCanApi
             });
 
             // Add application services DI
+            services.AddTransient<IRequest, ImplRequest>();
+            services.AddTransient<IGarbageCan, ImplGarbageCan>();
             services.AddTransient<ISecurity, ImplSecurity>();
             services.AddTransient<Email>();
             services.AddTransient<databaseIEContext>();
