@@ -48,6 +48,13 @@
             <response code="400">Error while Adding User</response>
             <response code="500">Internal Server Error or Error while handshaking with database</response>
         </member>
+        <member name="M:GarbageCanApi.Controllers.RequestController.#ctor(GarbageCanApi.Interfaces.IRequest,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.RequestController})">
+            <summary>
+            Constructor method resposible for DI between interfaces
+            </summary>
+            <param name="IRequestServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
+            <param name="logger">Interface for NLog's</param>
+        </member>
         <member name="T:GarbageCanApi.Controllers.SecurityController">
             <summary>
             Controller responsible for all security methods such as creating users, generating tokens and much more
