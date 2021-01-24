@@ -186,7 +186,7 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
-        /// Verify User by passing verification code sent in email.
+        /// Verify User by passing verification code and Email sent in email.
         /// </summary>
         /// <param name="user"> Set Uemail and VerificationCode </param>
         /// <returns>a flag to confirm user that email is verified</returns>
@@ -197,11 +197,11 @@ namespace GarbageCanApi.Controllers
         [Route("VerifyUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult VerifyUser([FromBody] User user)
+        public IActionResult VerifyUser([FromBody] UserViewModel user)
         {
             try
             {
-                var isUserVerified = ISecurityServices.VerifyUser(user.Email, user.CodeVerification ?? 0);
+                var isUserVerified = ISecurityServices.VerifyUser(user.Email, user.VerificationCode);
                 if (isUserVerified)
                 {
                     return StatusCode(200);
