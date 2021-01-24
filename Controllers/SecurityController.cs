@@ -88,7 +88,7 @@ namespace GarbageCanApi.Controllers
         /// <response code="400">Error while sending verification code to user.</response>
         [HttpGet]
         [Authorize]
-        [Route("SendVerificationCode")]
+        [Route("SendVerificationCode/{userEmail}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult SendVerificationCode(string userEmail)
@@ -118,7 +118,7 @@ namespace GarbageCanApi.Controllers
         /// <response code="400">Error while sending temporary password to to user.</response>
         [HttpGet]
         [AllowAnonymous]
-        [Route("ForgetPassword")]
+        [Route("ForgetPassword/{userEmail}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ForgetPassword(string userEmail)
@@ -148,7 +148,7 @@ namespace GarbageCanApi.Controllers
         /// <response code="404">User Doesn't Exists </response>
         [HttpGet]
         [AllowAnonymous]
-        [Route("isUserExists")]
+        [Route("isUserExists/{userEmail}")]
         [ProducesResponseType(StatusCodes.Status302Found)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult isUserExists(string userEmail)
@@ -171,7 +171,7 @@ namespace GarbageCanApi.Controllers
         /// <response code="404">Mosque Doesn't Exists </response>
         [HttpGet]
         [AllowAnonymous]
-        [Route("IsUserNameExists")]
+        [Route("IsUserNameExists/{userName}")]
         [ProducesResponseType(StatusCodes.Status302Found)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult IsUserNameExists(string userName)

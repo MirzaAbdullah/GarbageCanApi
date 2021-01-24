@@ -4,6 +4,50 @@
         <name>GarbageCanApi</name>
     </assembly>
     <members>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.#ctor(GarbageCanApi.Interfaces.IGarbageCan,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.GarbageCanController})">
+            <summary>
+            Constructor method resposible for DI between interfaces
+            </summary>
+            <param name="IGarbageCanServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
+            <param name="logger">Interface for NLog's</param>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.GetUserDetailsById(System.String)">
+            <summary>
+            Getting User Details By User Id
+            </summary>
+            <param name="userId"> pass id of the user for details </param>
+            <returns>List of User-Detail depending on 'Id' Value</returns>
+            <response code="302">Users Data</response>
+            <response code="404">No Data Found</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.UpdateUserDetails(GarbageCanApi.Models.ViewModels.UserDetailsViewModel)">
+            <summary>
+            Update User Details
+            </summary>
+            <param name="udModel"> Set Model to get updated </param>
+            <returns>a flag to confirm user details is changed or not - 'true' if user details are successfully changed.</returns>
+            <response code="200">User Details changed successfully </response>
+            <response code="400">Error while changing user detail.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.DeleteUserDetails(GarbageCanApi.Models.ViewModels.UserDetailsViewModel)">
+            <summary>
+            Delete User Details
+            </summary>
+            <param name="udModel"> Set user id only </param>
+            <returns>a flag to confirm user details is delete or not - 'true' if user details are successfully changed.</returns>
+            <response code="200">User Details changed successfully </response>
+            <response code="400">Error while changing user detail.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.CreateUserDetails(GarbageCanApi.Models.ViewModels.UserDetailsViewModel)">
+            <summary>
+            Save User Details
+            </summary>
+            <param name="udModel"> Set the Complete Model </param>
+            <returns>user model filled with details of newly added user</returns>
+            <response code="200">User added successfully </response>
+            <response code="400">Error while Adding User</response>
+            <response code="500">Internal Server Error or Error while handshaking with database</response>
+        </member>
         <member name="T:GarbageCanApi.Controllers.SecurityController">
             <summary>
             Controller responsible for all security methods such as creating users, generating tokens and much more
@@ -69,7 +113,15 @@
             <response code="302">Mosque Already Exists </response>
             <response code="404">Mosque Doesn't Exists </response>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:GarbageCanApi.Controllers.SecurityController.VerifyUser(GarbageCanApi.Models.ViewModels.UserViewModel)" -->
+        <member name="M:GarbageCanApi.Controllers.SecurityController.VerifyUser(GarbageCanApi.Models.ViewModels.UserViewModel)">
+            <summary>
+            Verify User by passing verification code and Email sent in email.
+            </summary>
+            <param name="user"> Set Uemail and VerificationCode </param>
+            <returns>a flag to confirm user that email is verified</returns>
+            <response code="200">User Verified Successfully </response>
+            <response code="400">Error while verifying user.</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.SecurityController.ChangePassword(GarbageCanApi.Models.User)">
             <summary>
             Change User Password
