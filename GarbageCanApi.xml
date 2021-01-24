@@ -4,5 +4,117 @@
         <name>GarbageCanApi</name>
     </assembly>
     <members>
+        <member name="T:GarbageCanApi.Controllers.SecurityController">
+            <summary>
+            Controller responsible for all security methods such as creating users, generating tokens and much more
+            </summary>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.#ctor(GarbageCanApi.Interfaces.ISecurity,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.SecurityController})">
+            <summary>
+            Constructor method resposible for DI between interfaces
+            </summary>
+            <param name="ISecurityServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
+            <param name="logger">Interface for NLog's</param>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.GetAllUsers">
+            <summary>
+            Getting all active users including User Name
+            </summary>
+            <returns>List of all Verified Users</returns>
+            <response code="302">Users Data</response>
+            <response code="404">No Data Found</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.GetUserById(System.String)">
+            <summary>
+            Getting active user including User Name
+            </summary>
+            <param name="userId"> pass id of the user for details </param>
+            <returns>List of all Users depending on 'Id' Value</returns>
+            <response code="302">Users Data</response>
+            <response code="404">No Data Found</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.SendVerificationCode(System.String)">
+            <summary>
+            Send Verification Code to user's email
+            </summary>
+            <param name="userEmail"> Email that needs to be set verified </param>
+            <returns>a flag to confirm user that email is sent successfully</returns>
+            <response code="200">Verification code send successfully </response>
+            <response code="400">Error while sending verification code to user.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.ForgetPassword(System.String)">
+            <summary>
+            Send temporary password to user's email
+            </summary>
+            <param name="userEmail"> Email of a user need to reset for temporary password </param>
+            <returns>a flag to confirm user that temporary password's email is sent successfully</returns>
+            <response code="200">temporary password send successfully </response>
+            <response code="400">Error while sending temporary password to to user.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.isUserExists(System.String)">
+            <summary>
+            To Check if User Exists
+            </summary>
+            <param name="userEmail"> User Email Address </param>
+            <returns>return 302 if user exists and 404 if user not exists</returns>
+            <response code="302">User Already Exists </response>
+            <response code="404">User Doesn't Exists </response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.IsUserNameExists(System.String)">
+            <summary>
+            To Check if Mosque Exists
+            </summary>
+            <param name="userName"> User Name </param>
+            <returns>return 302 if mosque exists and 404 if mosque not exists</returns>
+            <response code="302">Mosque Already Exists </response>
+            <response code="404">Mosque Doesn't Exists </response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.VerifyUser(GarbageCanApi.Models.User)">
+            <summary>
+            Verify User by passing verification code sent in email.
+            </summary>
+            <param name="user"> Set Uemail and VerificationCode </param>
+            <returns>a flag to confirm user that email is verified</returns>
+            <response code="200">User Verified Successfully </response>
+            <response code="400">Error while verifying user.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.ChangePassword(GarbageCanApi.Models.User)">
+            <summary>
+            Change User Password
+            </summary>
+            <param name="userModel"> Set Uid and Upassword </param>
+            <returns>a flag to confirm user that password is changed or not - 'true' if password is successfully changed.</returns>
+            <response code="200">Password changed successfully </response>
+            <response code="400">Error while changing password.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.UpdateUser(GarbageCanApi.Models.User)">
+            <summary>
+            Update User Account Details
+            </summary>
+            <param name="userModel"> Id of the user whose account needs a change in records </param>
+            <returns>a flag to confirm that user account is updated or not - 'true' if user is updated.</returns>
+            <response code="200">Account updated successfully </response>
+            <response code="400">Error while updating your account.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.RegisterUser(GarbageCanApi.Models.ViewModels.UserViewModel)">
+            <summary>
+            Register User
+            </summary>
+            <param name="userModel"> Set Email, Password, UserName, FirstName, LastName </param>
+            <returns>user model filled with details of newly added user</returns>
+            <response code="200">User added successfully </response>
+            <response code="400">Error while Adding User</response>
+            <response code="500">Internal Server Error or Error while handshaking with database</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.LoginUser(GarbageCanApi.Models.User)">
+            <summary>
+            Authenticate and Login User
+            </summary>
+            <param name="userModel"> Credentials to authenticate user from database, pass only uemail and upassword </param>
+            <returns>a JWT token for logged in user</returns>
+            <response code="200">User successfully logged In</response>
+            <response code="400">Error while processing the request.</response>
+            <response code="401">Unauthorized Access.</response>
+        </member>
     </members>
 </doc>

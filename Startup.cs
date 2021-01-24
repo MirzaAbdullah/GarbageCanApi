@@ -1,6 +1,11 @@
+using GarbageCanApi.Implementations;
+using GarbageCanApi.Interfaces;
+using GarbageCanApi.Models;
+using GarbageCanApi.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -50,8 +55,10 @@ namespace GarbageCanApi
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
 
-            // Add application services
-            //services.AddTransient<INamazTimings, ImplNamazTimings>();
+            // Add application services DI
+            services.AddTransient<ISecurity, ImplSecurity>();
+            services.AddTransient<Email>();
+            services.AddTransient<databaseIEContext>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
