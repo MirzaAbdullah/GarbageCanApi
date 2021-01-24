@@ -224,7 +224,7 @@ namespace GarbageCanApi.Implementations
             var user = DbContext.Users.Where(user => user.Email == userEmail).SingleOrDefault();
 
             //If User Account is approved
-            if (user.IsVerified ?? false)
+            if (user != null)
             {
                 //Create Random number
                 var rand = new Random().Next(0, 1000000);

@@ -69,15 +69,7 @@
             <response code="302">Mosque Already Exists </response>
             <response code="404">Mosque Doesn't Exists </response>
         </member>
-        <member name="M:GarbageCanApi.Controllers.SecurityController.VerifyUser(GarbageCanApi.Models.User)">
-            <summary>
-            Verify User by passing verification code sent in email.
-            </summary>
-            <param name="user"> Set Uemail and VerificationCode </param>
-            <returns>a flag to confirm user that email is verified</returns>
-            <response code="200">User Verified Successfully </response>
-            <response code="400">Error while verifying user.</response>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:GarbageCanApi.Controllers.SecurityController.VerifyUser(GarbageCanApi.Models.ViewModels.UserViewModel)" -->
         <member name="M:GarbageCanApi.Controllers.SecurityController.ChangePassword(GarbageCanApi.Models.User)">
             <summary>
             Change User Password
