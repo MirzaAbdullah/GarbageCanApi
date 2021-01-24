@@ -11,7 +11,7 @@ namespace GarbageCanApi.Interfaces
     public interface ISecurity
     {
         string GenerateJSONWebToken(User userModel);
-        User AuthenticateUser(User userModel);
+        User AuthenticateUser(UserViewModel userModel);
         bool VerifyUser(string userEmailId, int verificationCode);
         bool SendVerificationEmail(string userEmail);
         bool ChangePassword(string userId, string newPassword);

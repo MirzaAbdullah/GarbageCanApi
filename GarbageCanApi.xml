@@ -106,7 +106,7 @@
             <response code="400">Error while Adding User</response>
             <response code="500">Internal Server Error or Error while handshaking with database</response>
         </member>
-        <member name="M:GarbageCanApi.Controllers.SecurityController.LoginUser(GarbageCanApi.Models.User)">
+        <member name="M:GarbageCanApi.Controllers.SecurityController.LoginUser(GarbageCanApi.Models.ViewModels.UserViewModel)">
             <summary>
             Authenticate and Login User
             </summary>

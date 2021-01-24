@@ -319,7 +319,7 @@ namespace GarbageCanApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult LoginUser([FromBody] User userModel)
+        public IActionResult LoginUser([FromBody] UserViewModel userModel)
         {
             try
             {

@@ -28,7 +28,7 @@ namespace GarbageCanApi.Implementations
             this.email = email;
         }
 
-        public User AuthenticateUser(User userModel)
+        public User AuthenticateUser(UserViewModel userModel)
         {
             if (userModel == null)
             {
