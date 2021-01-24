@@ -200,7 +200,7 @@ namespace GarbageCanApi.Models
                 entity.ToTable("users");
 
                 entity.Property(e => e.IdUser)
-                    .HasMaxLength(30)
+                    .HasMaxLength(32)
                     .HasColumnName("id_user");
 
                 entity.Property(e => e.CodeVerification).HasColumnName("code_verification");
@@ -275,7 +275,7 @@ namespace GarbageCanApi.Models
                     .HasColumnName("country");
 
                 entity.Property(e => e.IdUser)
-                    .HasMaxLength(30)
+                    .HasMaxLength(32)
                     .HasColumnName("id_user");
 
                 entity.Property(e => e.Province)
