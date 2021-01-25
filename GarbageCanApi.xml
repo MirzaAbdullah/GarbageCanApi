@@ -4,6 +4,13 @@
         <name>GarbageCanApi</name>
     </assembly>
     <members>
+        <member name="M:GarbageCanApi.Controllers.AssignController.#ctor(GarbageCanApi.Interfaces.IAssign,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.AssignController})">
+            <summary>
+            Constructor method resposible for DI between interfaces
+            </summary>
+            <param name="IAssignServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
+            <param name="logger">Interface for NLog's</param>
+        </member>
         <member name="M:GarbageCanApi.Controllers.GarbageCanController.#ctor(GarbageCanApi.Interfaces.IGarbageCan,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.GarbageCanController})">
             <summary>
             Constructor method resposible for DI between interfaces
@@ -80,6 +87,15 @@
             Getting active user including User Name
             </summary>
             <param name="userId"> pass id of the user for details </param>
+            <returns>List of all Users depending on 'Id' Value</returns>
+            <response code="302">Users Data</response>
+            <response code="404">No Data Found</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.GetUserByRoleId(System.Int32)">
+            <summary>
+            Getting user by role id including User Name
+            </summary>
+            <param name="roleId"> pass role id of the user for details </param>
             <returns>List of all Users depending on 'Id' Value</returns>
             <response code="302">Users Data</response>
             <response code="404">No Data Found</response>

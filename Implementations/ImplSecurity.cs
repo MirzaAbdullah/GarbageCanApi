@@ -316,5 +316,27 @@ namespace GarbageCanApi.Implementations
 
             return false;
         }
+
+        public UserViewModel GetUserByRoleId(int roleId)
+        {
+            return DbContext
+                .Users
+                .Include(user => user.IdRoleNavigation)
+                .Where(user => user.IsVerified == true && user.IdRole == roleId)
+                .Select(user => new UserViewModel
+                {
+                    IdUser = user.IdUser,
+                    Email = user.Email,
+                    Name = user.Name,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    FullName = string.Format("{0} {1}", user.FirstName, user.LastName),
+                    PhoneNo = user.PhoneNo,
+                    IsVerified = user.IsVerified,
+                    CreatedDate = user.CreatedDate,
+                    IdRole = user.IdRole,
+                    NameRole = user.IdRoleNavigation.RoleName
+                }).SingleOrDefault();
+        }
     }
 }

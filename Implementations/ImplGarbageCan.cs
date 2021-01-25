@@ -21,7 +21,7 @@ namespace GarbageCanApi.Implementations
             {
                 //Adding new Id
                 var id = Guid.NewGuid().ToString("N");
-                udModel.IdUserDetail = Convert.ToInt32(id);
+                udModel.IdUserDetail = id;
 
                 var userDetails = SyncUserDetailsToUserDetailsViewModel(udModel);
 
@@ -61,7 +61,7 @@ namespace GarbageCanApi.Implementations
             {
                 return DbContext.UserDetails.Where(uDetails => uDetails.IdUser == userId).Select(uDetails => new UserDetailsViewModel
                 {
-                    IdUserDetail = uDetails.IdUserDetail,
+                    IdUserDetail = uDetails.IdUserDetail.ToString(),
                     IdUser = uDetails.IdUser,
                     Address1 = uDetails.Address1,
                     Address2 = uDetails.Address2,
@@ -95,7 +95,7 @@ namespace GarbageCanApi.Implementations
         private UserDetail SyncUserDetailsToUserDetailsViewModel(UserDetailsViewModel udModel)
         {
             return new UserDetail { 
-                IdUserDetail = udModel.IdUserDetail,
+                IdUserDetail = Convert.ToInt32(udModel.IdUserDetail),
                 IdUser = udModel.IdUser,
                 Address1 = udModel.Address1,
                 Address2 = udModel.Address2,

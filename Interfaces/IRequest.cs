@@ -14,5 +14,6 @@ namespace GarbageCanApi.Interfaces
         IEnumerable<RequestViewModel> GetAllRequestsByUserId(string userId);
         RequestViewModel GetRequestsById(string requestId);
         IEnumerable<RequestViewModel> GetAllRequestsByStatus(string status);
+        bool ChangeRequestStatus(string requestId, string status);
     }
 }
