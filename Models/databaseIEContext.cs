@@ -127,19 +127,19 @@ namespace GarbageCanApi.Models
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.IdUser)
+                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("id_user");
 
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasColumnType("bit(1)")
-                    .HasColumnName("is_active");
+                entity.Property(e => e.IsActive).HasColumnName("is_active");
 
                 entity.Property(e => e.Latitudes)
+                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("latitudes");
 
                 entity.Property(e => e.Longitudes)
+                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("longitudes");
 
@@ -174,6 +174,7 @@ namespace GarbageCanApi.Models
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.IdUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_users");
             });
 

@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace GarbageCanApi.Models
+namespace GarbageCanApi.Models.ViewModels
 {
-    public partial class Request
+    public class RequestViewModel
     {
-        public Request()
-        {
-            Assigns = new HashSet<Assign>();
-        }
-
         public int IdRequest { get; set; }
         public string IdUser { get; set; }
         public string Latitudes { get; set; }
@@ -24,8 +19,5 @@ namespace GarbageCanApi.Models
         public string PickupStatus { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
-
-        public virtual User IdUserNavigation { get; set; }
-        public virtual ICollection<Assign> Assigns { get; set; }
     }
 }
