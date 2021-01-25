@@ -80,6 +80,29 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// Getting user by role id including User Name
+        /// </summary>
+        /// <param name="roleId"> pass role id of the user for details </param>
+        /// <returns>List of all Users depending on 'Id' Value</returns>
+        /// <response code="302">Users Data</response>
+        /// <response code="404">No Data Found</response>
+        [HttpGet]
+        [Authorize]
+        [Route("GetUserByRoleId/{roleId}")]
+        [ProducesResponseType(StatusCodes.Status302Found)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetUserByRoleId(int roleId)
+        {
+            var user = ISecurityServices.GetUserByRoleId(roleId);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Send Verification Code to user's email
         /// </summary>
         /// <param name="userEmail"> Email that needs to be set verified </param>

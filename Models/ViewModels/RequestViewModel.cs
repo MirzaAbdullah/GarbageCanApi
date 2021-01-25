@@ -7,7 +7,7 @@ namespace GarbageCanApi.Models.ViewModels
 {
     public class RequestViewModel
     {
-        public int IdRequest { get; set; }
+        public string IdRequest { get; set; }
         public string IdUser { get; set; }
         public string Latitudes { get; set; }
         public string Longitudes { get; set; }
