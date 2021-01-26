@@ -9,7 +9,7 @@ namespace GarbageCanApi.Models
 {
     public partial class databaseIEContext : DbContext
     {
-        private readonly IConfiguration configuration;
+        public readonly IConfiguration configuration;
         public databaseIEContext(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -23,7 +23,9 @@ namespace GarbageCanApi.Models
         public virtual DbSet<Assign> Assigns { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<RequestDetail> RequestDetails { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
@@ -117,6 +119,25 @@ namespace GarbageCanApi.Models
                     .HasColumnName("customer_name");
             });
 
+            modelBuilder.Entity<Item>(entity =>
+            {
+                entity.HasKey(e => e.IdItem)
+                    .HasName("items_pkey");
+
+                entity.ToTable("items");
+
+                entity.Property(e => e.IdItem)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_item");
+
+                entity.Property(e => e.ItemName)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("item_name");
+
+                entity.Property(e => e.ItemPrice).HasColumnName("item_price");
+            });
+
             modelBuilder.Entity<Request>(entity =>
             {
                 entity.HasKey(e => e.IdRequest)
@@ -155,29 +176,48 @@ namespace GarbageCanApi.Models
                     .HasColumnType("date")
                     .HasColumnName("pickup_date");
 
-                entity.Property(e => e.PickupItem)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("pickup_item");
-
-                entity.Property(e => e.PickupStatus)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("pickup_status");
-
                 entity.Property(e => e.PickupTime)
                     .HasColumnType("time without time zone")
                     .HasColumnName("pickup_time");
-
-                entity.Property(e => e.PickupWeight)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("pickup_weight");
 
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.IdUser)
                     .HasConstraintName("fk_users");
+            });
+
+            modelBuilder.Entity<RequestDetail>(entity =>
+            {
+                entity.HasKey(e => e.IdRequestDetail)
+                    .HasName("request_details_pkey");
+
+                entity.ToTable("request_details");
+
+                entity.Property(e => e.IdRequestDetail)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_request_detail");
+
+                entity.Property(e => e.IdItem)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_item");
+
+                entity.Property(e => e.IdRequest)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_request");
+
+                entity.Property(e => e.ItemCost).HasColumnName("item_cost");
+
+                entity.Property(e => e.ItemWeight).HasColumnName("item_weight");
+
+                entity.HasOne(d => d.IdItemNavigation)
+                    .WithMany(p => p.RequestDetails)
+                    .HasForeignKey(d => d.IdItem)
+                    .HasConstraintName("fk_item");
+
+                entity.HasOne(d => d.IdRequestNavigation)
+                    .WithMany(p => p.RequestDetails)
+                    .HasForeignKey(d => d.IdRequest)
+                    .HasConstraintName("fk_request");
             });
 
             modelBuilder.Entity<Role>(entity =>
