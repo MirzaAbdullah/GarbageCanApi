@@ -92,12 +92,10 @@ namespace GarbageCanApi.Implementations
             reqDBModel.Latitudes = reqModel.Latitudes;
             reqDBModel.Longitudes = reqModel.Longitudes;
             reqDBModel.IsActive = reqModel.IsActive;
-            reqDBModel.PickupCost = reqModel.PickupCost;
             reqDBModel.PickupDate = reqModel.PickupDate;
-            reqDBModel.PickupItem = reqModel.PickupItem;
             reqDBModel.PickupStatus = reqModel.PickupStatus;
+            reqDBModel.PickupCost = reqDBModel.PickupCost;
             reqDBModel.PickupTime = reqModel.PickupTime;
-            reqDBModel.PickupWeight = reqModel.PickupWeight;
             reqDBModel.CreatedDate = reqModel.CreatedDate;
 
             return reqDBModel;
