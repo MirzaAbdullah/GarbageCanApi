@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GarbageCanApi.Models.ViewModels
 {
-    public class RequestViewModel
+    public class PickupRequestViewModel
     {
         public string IdRequest { get; set; }
         public string IdUser { get; set; }

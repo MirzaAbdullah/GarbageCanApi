@@ -55,12 +55,21 @@
             <response code="400">Error while Adding User</response>
             <response code="500">Internal Server Error or Error while handshaking with database</response>
         </member>
-        <member name="M:GarbageCanApi.Controllers.RequestController.#ctor(GarbageCanApi.Interfaces.IRequest,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.RequestController})">
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.#ctor(GarbageCanApi.Interfaces.IPickupRequest,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.PickupRequestController})">
             <summary>
             Constructor method resposible for DI between interfaces
             </summary>
             <param name="IRequestServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
             <param name="logger">Interface for NLog's</param>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.UpdatePickupStatus(GarbageCanApi.Models.ViewModels.PickupRequestViewModel)">
+            <summary>
+            Update Pickup Status
+            </summary>
+            <param name="reqModel"> Set requestId and Pickup Status </param>
+            <returns>a flag to confirm pickup status is changed or not - 'true' if status are successfully changed.</returns>
+            <response code="200">Pickup Status changed successfully </response>
+            <response code="400">Error while updating Pickup Status.</response>
         </member>
         <member name="T:GarbageCanApi.Controllers.SecurityController">
             <summary>

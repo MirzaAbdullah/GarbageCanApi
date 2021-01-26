@@ -23,14 +23,14 @@ namespace GarbageCanApi.Implementations
                 var id = Guid.NewGuid().ToString("N");
                 udModel.IdUserDetail = id;
 
-                var userDetails = SyncUserDetailsToUserDetailsViewModel(udModel);
+                var userDetails = SyncUserDetailsToUserDetailsViewModel(udModel, new UserDetail());
 
                 DbContext.UserDetails.Add(userDetails);
                 var count = DbContext.SaveChanges();
 
                 if (count > 0)
                 {
-                    return DbContext.UserDetails.Where(uDetails => uDetails.IdUserDetail == Convert.ToInt32(id)).SingleOrDefault();
+                    return DbContext.UserDetails.Where(uDetails => uDetails.IdUserDetail == id).SingleOrDefault();
                 }
             }
 
@@ -80,10 +80,10 @@ namespace GarbageCanApi.Implementations
 
             if (userDetails != null)
             {
-                var uDetails = SyncUserDetailsToUserDetailsViewModel(udModel);
+                var uDetails = SyncUserDetailsToUserDetailsViewModel(udModel, userDetails);
 
                 //Update in DB
-                DbContext.UserDetails.Update(uDetails);
+                //DbContext.UserDetails.Update(uDetails);
                 DbContext.SaveChanges();
 
                 return true;
@@ -92,17 +92,17 @@ namespace GarbageCanApi.Implementations
             return false;
         }
 
-        private UserDetail SyncUserDetailsToUserDetailsViewModel(UserDetailsViewModel udModel)
+        private UserDetail SyncUserDetailsToUserDetailsViewModel(UserDetailsViewModel udModel, UserDetail udDBModel)
         {
-            return new UserDetail { 
-                IdUserDetail = Convert.ToInt32(udModel.IdUserDetail),
-                IdUser = udModel.IdUser,
-                Address1 = udModel.Address1,
-                Address2 = udModel.Address2,
-                City = udModel.City,
-                Province = udModel.Province,
-                Country = udModel.Country
-            };
+            udDBModel.IdUserDetail = udModel.IdUserDetail;
+            udDBModel.IdUser = udModel.IdUser;
+            udDBModel.Address1 = udModel.Address1;
+            udDBModel.Address2 = udModel.Address2;
+            udDBModel.City = udModel.City;
+            udDBModel.Province = udModel.Province;
+            udDBModel.Country = udModel.Country;
+
+            return udDBModel;
         }
     }
 }
