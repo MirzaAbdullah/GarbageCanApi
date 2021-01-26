@@ -9,7 +9,7 @@ namespace GarbageCanApi.Models
 {
     public partial class databaseIEContext : DbContext
     {
-        public readonly IConfiguration configuration;
+        private readonly IConfiguration configuration;
         public databaseIEContext(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -175,6 +175,11 @@ namespace GarbageCanApi.Models
                 entity.Property(e => e.PickupDate)
                     .HasColumnType("date")
                     .HasColumnName("pickup_date");
+
+                entity.Property(e => e.PickupStatus)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnName("pickup_status");
 
                 entity.Property(e => e.PickupTime)
                     .HasColumnType("time without time zone")

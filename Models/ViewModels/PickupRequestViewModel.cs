@@ -13,9 +13,6 @@ namespace GarbageCanApi.Models.ViewModels
         public string Longitudes { get; set; }
         public DateTime PickupDate { get; set; }
         public TimeSpan PickupTime { get; set; }
-        public string PickupItem { get; set; }
-        public string PickupWeight { get; set; }
-        public string PickupCost { get; set; }
         public string PickupStatus { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
