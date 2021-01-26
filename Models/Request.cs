@@ -12,7 +12,7 @@ namespace GarbageCanApi.Models
             Assigns = new HashSet<Assign>();
         }
 
-        public int IdRequest { get; set; }
+        public string IdRequest { get; set; }
         public string IdUser { get; set; }
         public string Latitudes { get; set; }
         public string Longitudes { get; set; }
@@ -22,8 +22,8 @@ namespace GarbageCanApi.Models
         public string PickupWeight { get; set; }
         public string PickupCost { get; set; }
         public string PickupStatus { get; set; }
-        public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public virtual User IdUserNavigation { get; set; }
         public virtual ICollection<Assign> Assigns { get; set; }

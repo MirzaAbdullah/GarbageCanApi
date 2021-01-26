@@ -11,7 +11,7 @@ namespace GarbageCanApi.Models.ViewModels
         public string IdUser { get; set; }
         public string IdRequest { get; set; }
         public DateTime CreatedDate { get; set; }
-        public RequestViewModel Request { get; set; }
+        public PickupRequestViewModel Request { get; set; }
         public UserViewModel User { get; set; }
         public UserDetailsViewModel UserDetails { get; set; }
     }

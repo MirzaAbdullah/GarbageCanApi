@@ -47,16 +47,20 @@ namespace GarbageCanApi.Models
 
                 entity.ToTable("assign");
 
-                entity.Property(e => e.IdAssign).HasColumnName("id_assign");
+                entity.Property(e => e.IdAssign)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_assign");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("date")
                     .HasColumnName("created_date");
 
-                entity.Property(e => e.IdRequest).HasColumnName("id_request");
+                entity.Property(e => e.IdRequest)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_request");
 
                 entity.Property(e => e.IdUser)
-                    .HasMaxLength(30)
+                    .HasMaxLength(32)
                     .HasColumnName("id_user");
 
                 entity.HasOne(d => d.IdRequestNavigation)
@@ -120,26 +124,25 @@ namespace GarbageCanApi.Models
 
                 entity.ToTable("requests");
 
-                entity.Property(e => e.IdRequest).HasColumnName("id_request");
+                entity.Property(e => e.IdRequest)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_request");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("date")
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.IdUser)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("id_user");
 
                 entity.Property(e => e.IsActive).HasColumnName("is_active");
 
                 entity.Property(e => e.Latitudes)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("latitudes");
 
                 entity.Property(e => e.Longitudes)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("longitudes");
 
@@ -174,7 +177,6 @@ namespace GarbageCanApi.Models
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.IdUser)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_users");
             });
 
@@ -256,7 +258,10 @@ namespace GarbageCanApi.Models
 
                 entity.ToTable("user_details");
 
-                entity.Property(e => e.IdUserDetail).HasColumnName("id_user_detail");
+                entity.Property(e => e.IdUserDetail)
+                    .HasMaxLength(32)
+                    .HasColumnName("id_user_detail")
+                    .HasDefaultValueSql("nextval('user_details_id_user_detail_seq'::regclass)");
 
                 entity.Property(e => e.Address1)
                     .IsRequired()
