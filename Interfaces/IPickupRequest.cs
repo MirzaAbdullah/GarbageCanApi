@@ -9,7 +9,7 @@ namespace GarbageCanApi.Interfaces
 {
     public interface IPickupRequest
     {
-        Request CreatePickupRequest(PickupRequestViewModel reqModel);
+        PickupRequestViewModel CreatePickupRequest(PickupRequestViewModel reqModel);
         bool DeletePickupRequest(PickupRequestViewModel reqModel);
         IEnumerable<PickupRequestViewModel> GetAllRequestsByUserId(string userId);
         PickupRequestViewModel GetRequestsById(string requestId);

@@ -30,6 +30,36 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// Get Pickup Request by Id
+        /// </summary>
+        /// <param name="requestId"> Set request Id </param>
+        /// <returns>a model is send back if record exists</returns>
+        /// <response code="200">If Record Exists </response>
+        /// <response code="400">Error is there is no record.</response>
+        [HttpGet]
+        [Authorize]
+        [Route("GetPickupRequestById/{requestId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetPickupRequestById(string requestId)
+        {
+            try
+            {
+                var isPickupRequestExists = IRequestServices.GetRequestsById(requestId);
+                if (isPickupRequestExists != null)
+                {
+                    return Ok(isPickupRequestExists);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while retrieving pick up request");
+            }
+
+            return BadRequest("Retrieving pickup request failed. Please try again!");
+        }
+
+        /// <summary>
         /// Update Pickup Status
         /// </summary>
         /// <param name="reqModel"> Set requestId and Pickup Status </param>
@@ -57,6 +87,36 @@ namespace GarbageCanApi.Controllers
             }
 
             return BadRequest("Updating Pickup Status Failed. Please try again!");
+        }
+
+        /// <summary>
+        /// Create Pickup Request
+        /// </summary>
+        /// <param name="reqModel"> Set requestId and Pickup Status </param>
+        /// <returns>a model is send back if request is successfully created.</returns>
+        /// <response code="200">Pickup Request created successfully </response>
+        /// <response code="400">Error while creating a pickup request.</response>
+        [HttpPost]
+        [Authorize]
+        [Route("CreatePickupRequest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult CreatePickupRequest([FromBody] PickupRequestViewModel reqModel)
+        {
+            try
+            {
+                var isPickupRequestGenerated = IRequestServices.CreatePickupRequest(reqModel);
+                if (isPickupRequestGenerated != null)
+                {
+                    return Ok(isPickupRequestGenerated);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while creating a pickup request");
+            }
+
+            return BadRequest("Generating a pickup request Failed. Please try again!");
         }
     }
 }
