@@ -154,7 +154,7 @@ namespace GarbageCanApi.Models
                     .HasColumnName("created_date");
 
                 entity.Property(e => e.IdUser)
-                    .HasMaxLength(30)
+                    .HasMaxLength(32)
                     .HasColumnName("id_user");
 
                 entity.Property(e => e.IsActive).HasColumnName("is_active");
@@ -167,10 +167,7 @@ namespace GarbageCanApi.Models
                     .HasMaxLength(30)
                     .HasColumnName("longitudes");
 
-                entity.Property(e => e.PickupCost)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("pickup_cost");
+                entity.Property(e => e.PickupCost).HasColumnName("pickup_cost");
 
                 entity.Property(e => e.PickupDate)
                     .HasColumnType("date")

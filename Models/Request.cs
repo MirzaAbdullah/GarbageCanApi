@@ -19,10 +19,10 @@ namespace GarbageCanApi.Models
         public string Longitudes { get; set; }
         public DateTime PickupDate { get; set; }
         public TimeSpan PickupTime { get; set; }
-        public string PickupCost { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string PickupStatus { get; set; }
+        public double? PickupCost { get; set; }
 
         public virtual User IdUserNavigation { get; set; }
         public virtual ICollection<Assign> Assigns { get; set; }

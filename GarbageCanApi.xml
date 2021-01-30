@@ -62,6 +62,15 @@
             <param name="IRequestServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
             <param name="logger">Interface for NLog's</param>
         </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.GetPickupRequestById(System.String)">
+            <summary>
+            Get Pickup Request by Id
+            </summary>
+            <param name="requestId"> Set request Id </param>
+            <returns>a model is send back if record exists</returns>
+            <response code="200">If Record Exists </response>
+            <response code="400">Error is there is no record.</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.PickupRequestController.UpdatePickupStatus(GarbageCanApi.Models.ViewModels.PickupRequestViewModel)">
             <summary>
             Update Pickup Status
@@ -70,6 +79,15 @@
             <returns>a flag to confirm pickup status is changed or not - 'true' if status are successfully changed.</returns>
             <response code="200">Pickup Status changed successfully </response>
             <response code="400">Error while updating Pickup Status.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.CreatePickupRequest(GarbageCanApi.Models.ViewModels.PickupRequestViewModel)">
+            <summary>
+            Create Pickup Request
+            </summary>
+            <param name="reqModel"> Set requestId and Pickup Status </param>
+            <returns>a model is send back if request is successfully created.</returns>
+            <response code="200">Pickup Request created successfully </response>
+            <response code="400">Error while creating a pickup request.</response>
         </member>
         <member name="T:GarbageCanApi.Controllers.SecurityController">
             <summary>
