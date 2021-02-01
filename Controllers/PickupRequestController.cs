@@ -235,10 +235,10 @@ namespace GarbageCanApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while retrieving pick up request");
+                _logger.LogError(ex, "Error while deleting pick up request");
             }
 
-            return BadRequest("Retrieving pickup request failed. Please try again!");
+            return BadRequest("Deleting pickup request failed. Please try again!");
         }
     }
 }

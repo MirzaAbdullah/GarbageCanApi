@@ -11,6 +11,51 @@
             <param name="IAssignServices">Pass interface class of type ISuecrity which is responsbile for all security related operations</param>
             <param name="logger">Interface for NLog's</param>
         </member>
+        <member name="M:GarbageCanApi.Controllers.AssignController.GetAllAssignPickupsByDriverId(System.String)">
+            <summary>
+            Get All Assign Pickups By DriverId 
+            </summary>
+            <param name="DriverId"> Set Driver Id </param>
+            <returns>a model is send back if record exists</returns>
+            <response code="200">If Record Exists </response>
+            <response code="400">Error is there is no record.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.AssignController.GetAssignPickupsById(System.String)">
+            <summary>
+            Get Assign Pickup Data By Assign Id
+            </summary>
+            <param name="AssignId"> Set Assign Id </param>
+            <returns>a model is send back if record exists</returns>
+            <response code="200">If Record Exists </response>
+            <response code="400">Error is there is no record.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.AssignController.GetInProcAssignPickupsByDriverId(System.String)">
+            <summary>
+            Get All In-Process Assign Pickup Data By Driver Id
+            </summary>
+            <param name="DriverId"> Set Assign Id </param>
+            <returns>a model is send back if record exists</returns>
+            <response code="200">If Record Exists </response>
+            <response code="400">Error is there is no record.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.AssignController.AcceptAssignedRequestByDriver(GarbageCanApi.Models.ViewModels.AssignViewModel)">
+            <summary>
+            Accept Assign Request
+            </summary>
+            <param name="AssignModel"> Set AssignID </param>
+            <returns>a flag is returned if Assignment is accepted as true else false.</returns>
+            <response code="200">Accepted Assigned Request Successfuly </response>
+            <response code="400">Error while accepting pickup request.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.AssignController.CreatePickupRequest(GarbageCanApi.Models.ViewModels.AssignViewModel)">
+            <summary>
+            Create Assign Request
+            </summary>
+            <param name="AssignModel"> Set ListRequestIds and userId </param>
+            <returns>a model is send back if request is successfully created.</returns>
+            <response code="200">Pickup Request created successfully </response>
+            <response code="400">Error while creating a pickup request.</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.GarbageCanController.#ctor(GarbageCanApi.Interfaces.IGarbageCan,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.GarbageCanController})">
             <summary>
             Constructor method resposible for DI between interfaces
