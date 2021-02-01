@@ -1,6 +1,7 @@
 ﻿using GarbageCanApi.Interfaces;
 using GarbageCanApi.Models;
 using GarbageCanApi.Models.ViewModels;
+using GarbageCanApi.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,22 @@ namespace GarbageCanApi.Implementations
             }
 
             return null;
+        }
+
+        public IEnumerable<Item> ddlItems()
+        {
+            return DbContext.Items.Select(item => new Item { IdItem = item.IdItem, ItemName = item.ItemName }).ToList();
+        }
+
+        public IEnumerable<RolesViewModel> ddlRoles()
+        {
+            return Enum.GetValues(typeof(EnumRoles.Roles))
+               .Cast<EnumRoles.Roles>()
+               .Select(role => new RolesViewModel
+               {
+                   RoleId = (int)role,
+                   RoleName = role.ToString()
+               }).ToList();
         }
 
         public bool DeleteUserDetails(UserDetailsViewModel udModel)
@@ -81,9 +98,6 @@ namespace GarbageCanApi.Implementations
             if (userDetails != null)
             {
                 var uDetails = SyncUserDetailsToUserDetailsViewModel(udModel, userDetails);
-
-                //Update in DB
-                //DbContext.UserDetails.Update(uDetails);
                 DbContext.SaveChanges();
 
                 return true;

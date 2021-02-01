@@ -13,5 +13,7 @@ namespace GarbageCanApi.Interfaces
         UserDetail CreateUserDetails(UserDetailsViewModel udModel);
         bool UpdateUserDetails(UserDetailsViewModel udModel);
         bool DeleteUserDetails(UserDetailsViewModel udModel);
+        IEnumerable<RolesViewModel> ddlRoles();
+        IEnumerable<Item> ddlItems();
     }
 }

@@ -60,6 +60,66 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// Get Pickup Request by Pickup Status
+        /// </summary>
+        /// <param name="status"> Set Pickup Status </param>
+        /// <returns>a model is send back if there are records of entered status</returns>
+        /// <response code="200">If Record Exists </response>
+        /// <response code="400">Error is there is no record.</response>
+        [HttpGet]
+        [Authorize]
+        [Route("GetPickupRequestByStatus/{status}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetPickupRequestByStatus(string status)
+        {
+            try
+            {
+                var isPickupRequestExists = IRequestServices.GetAllRequestsByStatus(status);
+                if (isPickupRequestExists != null)
+                {
+                    return Ok(isPickupRequestExists);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while retrieving pick up request");
+            }
+
+            return BadRequest("Retrieving pickup request failed. Please try again!");
+        }
+
+        /// <summary>
+        /// Get Pickup Request by User Id
+        /// </summary>
+        /// <param name="UserId"> Set User Id </param>
+        /// <returns>a model is send back if there are records of entered status</returns>
+        /// <response code="200">If Record Exists </response>
+        /// <response code="400">Error is there is no record.</response>
+        [HttpGet]
+        [Authorize]
+        [Route("GetPickupRequestByUserId/{UserId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetPickupRequestByUserId(string UserId)
+        {
+            try
+            {
+                var isPickupRequestExists = IRequestServices.GetAllRequestsByUserId(UserId);
+                if (isPickupRequestExists != null)
+                {
+                    return Ok(isPickupRequestExists);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while retrieving pick up request");
+            }
+
+            return BadRequest("Retrieving pickup request failed. Please try again!");
+        }
+
+        /// <summary>
         /// Update Pickup Status
         /// </summary>
         /// <param name="reqModel"> Set requestId and Pickup Status </param>
@@ -90,6 +150,36 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// Update Request Details
+        /// </summary>
+        /// <param name="reqModel"> Set requestId, Pickup Cost and Request Details Table </param>
+        /// <returns>a flag to confirm request details is changed or not - 'true' if details are successfully changed.</returns>
+        /// <response code="200">Request Details changed successfully </response>
+        /// <response code="400">Error while updating request details.</response>
+        [HttpPut]
+        [Authorize]
+        [Route("UpdateRequestDetailsByDriver")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateRequestDetailsByDriver([FromBody] PickupRequestViewModel reqModel)
+        {
+            try
+            {
+                var isPickupStatusChanged = IRequestServices.UpdateRequestDetailsByDriver(reqModel);
+                if (isPickupStatusChanged)
+                {
+                    return StatusCode(200);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while updating Pickup Status.");
+            }
+
+            return BadRequest("Updating Request Details Failed. Please try again!");
+        }
+
+        /// <summary>
         /// Create Pickup Request
         /// </summary>
         /// <param name="reqModel"> Set requestId and Pickup Status </param>
@@ -117,6 +207,38 @@ namespace GarbageCanApi.Controllers
             }
 
             return BadRequest("Generating a pickup request Failed. Please try again!");
+        }
+
+        /// <summary>
+        /// Delete Pickup Request by Pickup Request Id
+        /// </summary>
+        /// <param name="requestId"> Set Pickup Request Id </param>
+        /// <returns>a Boolean flag is returned if Request Details are deleted</returns>
+        /// <response code="200">If record deleted </response>
+        /// <response code="400">Error, if record is not deleted.</response>
+        [HttpDelete]
+        [Authorize]
+        [Route("DeletePickupRequest/{requestId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeletePickupRequest(string requestId)
+        {
+            try
+            {
+                var isPickupRequestExists = IRequestServices.DeletePickupRequest(requestId);
+                if (isPickupRequestExists)
+                {
+                    return Ok(true);
+                }
+
+                return Ok(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while retrieving pick up request");
+            }
+
+            return BadRequest("Retrieving pickup request failed. Please try again!");
         }
     }
 }

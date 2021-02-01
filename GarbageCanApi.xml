@@ -27,6 +27,22 @@
             <response code="302">Users Data</response>
             <response code="404">No Data Found</response>
         </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.GetAllItems">
+            <summary>
+            List of all Items
+            </summary>
+            <returns>List of all Items</returns>
+            <response code="302">Data Found</response>
+            <response code="404">No Data Found</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.GetAllRoles">
+            <summary>
+            List of all Roles
+            </summary>
+            <returns>List of all Roles</returns>
+            <response code="302">Data Found</response>
+            <response code="404">No Data Found</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.GarbageCanController.UpdateUserDetails(GarbageCanApi.Models.ViewModels.UserDetailsViewModel)">
             <summary>
             Update User Details
@@ -71,6 +87,24 @@
             <response code="200">If Record Exists </response>
             <response code="400">Error is there is no record.</response>
         </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.GetPickupRequestByStatus(System.String)">
+            <summary>
+            Get Pickup Request by Pickup Status
+            </summary>
+            <param name="status"> Set Pickup Status </param>
+            <returns>a model is send back if there are records of entered status</returns>
+            <response code="200">If Record Exists </response>
+            <response code="400">Error is there is no record.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.GetPickupRequestByUserId(System.String)">
+            <summary>
+            Get Pickup Request by User Id
+            </summary>
+            <param name="UserId"> Set User Id </param>
+            <returns>a model is send back if there are records of entered status</returns>
+            <response code="200">If Record Exists </response>
+            <response code="400">Error is there is no record.</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.PickupRequestController.UpdatePickupStatus(GarbageCanApi.Models.ViewModels.PickupRequestViewModel)">
             <summary>
             Update Pickup Status
@@ -80,6 +114,15 @@
             <response code="200">Pickup Status changed successfully </response>
             <response code="400">Error while updating Pickup Status.</response>
         </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.UpdateRequestDetailsByDriver(GarbageCanApi.Models.ViewModels.PickupRequestViewModel)">
+            <summary>
+            Update Request Details
+            </summary>
+            <param name="reqModel"> Set requestId, Pickup Cost and Request Details Table </param>
+            <returns>a flag to confirm request details is changed or not - 'true' if details are successfully changed.</returns>
+            <response code="200">Request Details changed successfully </response>
+            <response code="400">Error while updating request details.</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.PickupRequestController.CreatePickupRequest(GarbageCanApi.Models.ViewModels.PickupRequestViewModel)">
             <summary>
             Create Pickup Request
@@ -88,6 +131,15 @@
             <returns>a model is send back if request is successfully created.</returns>
             <response code="200">Pickup Request created successfully </response>
             <response code="400">Error while creating a pickup request.</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.PickupRequestController.DeletePickupRequest(System.String)">
+            <summary>
+            Delete Pickup Request by Pickup Request Id
+            </summary>
+            <param name="requestId"> Set Pickup Request Id </param>
+            <returns>a Boolean flag is returned if Request Details are deleted</returns>
+            <response code="200">If record deleted </response>
+            <response code="400">Error, if record is not deleted.</response>
         </member>
         <member name="T:GarbageCanApi.Controllers.SecurityController">
             <summary>

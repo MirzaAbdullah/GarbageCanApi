@@ -53,6 +53,50 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// List of all Items
+        /// </summary>
+        /// <returns>List of all Items</returns>
+        /// <response code="302">Data Found</response>
+        /// <response code="404">No Data Found</response>
+        [HttpGet]
+        [Authorize]
+        [Route("GetAllItems")]
+        [ProducesResponseType(StatusCodes.Status302Found)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetAllItems()
+        {
+            var itemsModel = IGarbageCanServices.ddlItems();
+            if (itemsModel != null)
+            {
+                return Ok(itemsModel);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// List of all Roles
+        /// </summary>
+        /// <returns>List of all Roles</returns>
+        /// <response code="302">Data Found</response>
+        /// <response code="404">No Data Found</response>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetAllRoles")]
+        [ProducesResponseType(StatusCodes.Status302Found)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetAllRoles()
+        {
+            var rolesModel = IGarbageCanServices.ddlRoles();
+            if (rolesModel != null)
+            {
+                return Ok(rolesModel);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Update User Details
         /// </summary>
         /// <param name="udModel"> Set Model to get updated </param>
