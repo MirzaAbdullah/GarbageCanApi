@@ -8,8 +8,10 @@ namespace GarbageCanApi.Models.ViewModels
     public class AssignViewModel
     {
         public string IdAssign { get; set; }
+        public IEnumerable<string> ListAssignIds { get; set; }
         public string IdUser { get; set; }
         public string IdRequest { get; set; }
+        public IEnumerable<string> ListRequestIds { get; set; }
         public DateTime CreatedDate { get; set; }
         public PickupRequestViewModel Request { get; set; }
         public UserViewModel User { get; set; }

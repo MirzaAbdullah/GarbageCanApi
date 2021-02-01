@@ -9,9 +9,9 @@ namespace GarbageCanApi.Interfaces
     public interface IAssign
     {
         bool AssignPickups(string driverId, IEnumerable<string> requestIds);
-        bool EditPickups(string driverId, IEnumerable<string> requestIds);
-        bool DeletePickups(IEnumerable<string> assignIds);
+        bool AcceptAssignedPickup(string assignId);
         AssignViewModel GetAssignPickupsById(string assignId);
-        AssignViewModel GetAssignPickupsByDriverId(string driverId);
+        IEnumerable<AssignViewModel> GetAllAssignPickupsByDriverId(string driverId);
+        IEnumerable<AssignViewModel> GetInProcAssignPickupsByDriverId(string driverId);
     }
 }
