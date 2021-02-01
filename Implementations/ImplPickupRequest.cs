@@ -1,6 +1,7 @@
 ﻿using GarbageCanApi.Interfaces;
 using GarbageCanApi.Models;
 using GarbageCanApi.Models.ViewModels;
+using GarbageCanApi.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -49,6 +50,9 @@ namespace GarbageCanApi.Implementations
                         var id = Guid.NewGuid().ToString("N");
                         reqModel.IdRequest = id;
 
+                        //Setting Up the Pickup Status
+                        reqModel.PickupStatus = EnumPickupStatus.pickupStatus.InProcess.ToString();
+
                         var req = SyncRequestToRequestViewModel(reqModel, new Request());
 
                         DbContext.Requests.Add(req);
@@ -88,26 +92,45 @@ namespace GarbageCanApi.Implementations
 
             return null;
         }
-        public bool DeletePickupRequest(PickupRequestViewModel reqModel)
+        public bool DeletePickupRequest(string requestId)
         {
-            throw new NotImplementedException();
+            var reqDateTime = DbContext.Requests.Where(req => req.IdRequest == requestId).Select(reqDateTime => reqDateTime.CreatedDate).SingleOrDefault();
+
+            if (DateTime.Compare(reqDateTime, DateTime.Now) <= 0)
+            {
+                using (var transaction = DbContext.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var reqDetails = DbContext.RequestDetails.Where(reqDetails => reqDetails.IdRequest == requestId).ToList();
+                        DbContext.RequestDetails.RemoveRange(reqDetails);
+                        DbContext.SaveChanges();
+
+                        var req = DbContext.Requests.Where(reqDetails => reqDetails.IdRequest == requestId).SingleOrDefault();
+                        DbContext.Requests.Remove(req);
+                        DbContext.SaveChanges();
+
+                        transaction.Commit();
+
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+
+                        _logger.LogError(ex.Message, "Exception while deleting request and its details.");
+                    }
+                }
+            }
+
+            return false;
+            
         }
         public IEnumerable<PickupRequestViewModel> GetAllRequestsByStatus(string status)
         {
-            throw new NotImplementedException();
-        }
-        public IEnumerable<PickupRequestViewModel> GetAllRequestsByUserId(string userId)
-        {
-            throw new NotImplementedException();
-        }
-        public PickupRequestViewModel GetRequestsById(string requestId)
-        {
-            var request = DbContext.Requests.Where(req => req.IdRequest == requestId).SingleOrDefault();
-            if (request != null)
-            {
-                return DbContext.Requests
+            return DbContext.Requests
                             .Include(reqDetail => reqDetail.IdUserNavigation)
-                            .Where(req => req.IdRequest == requestId)
+                            .Where(req => req.PickupStatus == status)
                             .Select(reqModel => new PickupRequestViewModel
                             {
                                 IdRequest = reqModel.IdRequest,
@@ -141,6 +164,99 @@ namespace GarbageCanApi.Implementations
                                     IdRequestDetail = reqDetails.IdRequestDetail,
                                     IdRequest = reqDetails.IdRequest,
                                     IdItem = reqDetails.IdItem,
+                                    ItemName = reqDetails.IdItemNavigation.ItemName,
+                                    ItemCost = reqDetails.ItemCost,
+                                    ItemWeight = reqDetails.ItemWeight
+                                }).ToList()
+                            }).ToList();
+        }
+        public IEnumerable<PickupRequestViewModel> GetAllRequestsByUserId(string userId)
+        {
+            return DbContext.Requests
+                            .Include(reqDetail => reqDetail.IdUserNavigation)
+                            .Where(req => req.IdUser == userId)
+                            .Select(reqModel => new PickupRequestViewModel
+                            {
+                                IdRequest = reqModel.IdRequest,
+                                IdUser = reqModel.IdUser,
+                                UserData = new User
+                                {
+                                    IdUser = reqModel.IdUserNavigation.IdUser,
+                                    Name = reqModel.IdUserNavigation.Name,
+                                    FirstName = reqModel.IdUserNavigation.FirstName,
+                                    LastName = reqModel.IdUserNavigation.LastName,
+                                    PhoneNo = reqModel.IdUserNavigation.PhoneNo,
+                                    Email = reqModel.IdUserNavigation.Email,
+                                    IsVerified = reqModel.IdUserNavigation.IsVerified,
+                                    IdRole = reqModel.IdUserNavigation.IdRole,
+                                    IdRoleNavigation = new Role
+                                    {
+                                        IdRole = reqModel.IdUserNavigation.IdRoleNavigation.IdRole,
+                                        RoleName = reqModel.IdUserNavigation.IdRoleNavigation.RoleName
+                                    }
+                                },
+                                Latitudes = reqModel.Latitudes,
+                                Longitudes = reqModel.Longitudes,
+                                PickupDate = reqModel.PickupDate,
+                                PickupStatus = reqModel.PickupStatus,
+                                Pickup_Cost = reqModel.PickupCost,
+                                PickupTime = reqModel.PickupTime,
+                                CreatedDate = reqModel.CreatedDate,
+                                IsActive = reqModel.IsActive,
+                                RequestDetails = reqModel.RequestDetails.Select(reqDetails => new PickupRequestDetailsViewModel
+                                {
+                                    IdRequestDetail = reqDetails.IdRequestDetail,
+                                    IdRequest = reqDetails.IdRequest,
+                                    IdItem = reqDetails.IdItem,
+                                    ItemName = reqDetails.IdItemNavigation.ItemName,
+                                    ItemCost = reqDetails.ItemCost,
+                                    ItemWeight = reqDetails.ItemWeight
+                                }).ToList()
+                            }).ToList();
+        }
+        public PickupRequestViewModel GetRequestsById(string requestId)
+        {
+            var request = DbContext.Requests.Where(req => req.IdRequest == requestId).SingleOrDefault();
+            if (request != null)
+            {
+                return DbContext.Requests
+                            .Include(reqDetail => reqDetail.IdUserNavigation)
+                            .Where(req => req.IdRequest == requestId)
+                            .Select(reqModel => new PickupRequestViewModel
+                            {
+                                IdRequest = reqModel.IdRequest,
+                                IdUser = reqModel.IdUser,
+                                UserData = new User
+                                {
+                                    IdUser = reqModel.IdUserNavigation.IdUser,
+                                    Name = reqModel.IdUserNavigation.Name,
+                                    FirstName = reqModel.IdUserNavigation.FirstName,
+                                    LastName = reqModel.IdUserNavigation.LastName,
+                                    PhoneNo = reqModel.IdUserNavigation.PhoneNo,
+                                    Email = reqModel.IdUserNavigation.Email,
+                                    IsVerified = reqModel.IdUserNavigation.IsVerified,
+                                    CreatedDate = reqModel.IdUserNavigation.CreatedDate,
+                                    IdRole = reqModel.IdUserNavigation.IdRole,
+                                    IdRoleNavigation = new Role
+                                    {
+                                        IdRole = reqModel.IdUserNavigation.IdRoleNavigation.IdRole,
+                                        RoleName = reqModel.IdUserNavigation.IdRoleNavigation.RoleName
+                                    }
+                                },
+                                Latitudes = reqModel.Latitudes,
+                                Longitudes = reqModel.Longitudes,
+                                PickupDate = reqModel.PickupDate,
+                                PickupStatus = reqModel.PickupStatus,
+                                Pickup_Cost = reqModel.PickupCost,
+                                PickupTime = reqModel.PickupTime,
+                                CreatedDate = reqModel.CreatedDate,
+                                IsActive = reqModel.IsActive,
+                                RequestDetails = reqModel.RequestDetails.Select(reqDetails => new PickupRequestDetailsViewModel
+                                {
+                                    IdRequestDetail = reqDetails.IdRequestDetail,
+                                    IdRequest = reqDetails.IdRequest,
+                                    IdItem = reqDetails.IdItem,
+                                    ItemName = reqDetails.IdItemNavigation.ItemName,
                                     ItemCost = reqDetails.ItemCost,
                                     ItemWeight = reqDetails.ItemWeight
                                 }).ToList()
@@ -152,7 +268,49 @@ namespace GarbageCanApi.Implementations
         }
         public bool UpdateRequestDetailsByDriver(PickupRequestViewModel reqModel)
         {
-            throw new NotImplementedException();
+            var reqDetails = DbContext.RequestDetails.Where(reqDetail => reqDetail.IdRequest == reqModel.IdRequest).ToList();
+            if (reqDetails.Count > 0)
+            {
+                using (var transaction = DbContext.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        //Update Shipping Cost in Request Table
+                        var req = DbContext.Requests.Where(reqId => reqId.IdRequest == reqModel.IdRequest).SingleOrDefault();
+
+                        //Change Shipping Cost
+                        req.PickupCost = reqModel.Pickup_Cost;
+
+                        //Change Pickup Status
+                        req.PickupStatus = EnumPickupStatus.pickupStatus.Completed.ToString();
+
+                        //Update Request Table
+                        DbContext.SaveChanges();
+
+
+                        //Update Request Details Records
+                        foreach (PickupRequestDetailsViewModel reqDetailItem in reqModel.RequestDetails)
+                        {
+                            var reqDBModel = DbContext.RequestDetails.Where(reqDetail => reqDetail.IdRequestDetail == reqDetailItem.IdRequestDetail).SingleOrDefault();
+                            var reqDetail = SyncRequestDetailToRequestDetailViewModel(reqDetailItem, reqDBModel);
+
+                            DbContext.SaveChanges();
+                        }
+
+                        transaction.Commit();
+
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+
+                        _logger.LogError(ex.Message, "Exception while updating request details.");
+                    }
+                }
+            }
+
+            return false;
         }
         private Request SyncRequestToRequestViewModel(PickupRequestViewModel reqModel, Request reqDBModel)
         {
@@ -175,7 +333,7 @@ namespace GarbageCanApi.Implementations
             reqDBModel.IdRequest = reqModel.IdRequest;
             reqDBModel.ItemCost = reqModel.ItemCost;
             reqDBModel.ItemWeight = reqModel.ItemWeight;
-            reqDBModel.IdItem = reqDBModel.IdItem;
+            reqDBModel.IdItem = reqModel.IdItem;
 
             return reqDBModel;
         }
