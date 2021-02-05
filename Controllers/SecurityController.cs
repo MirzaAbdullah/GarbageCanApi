@@ -299,7 +299,7 @@ namespace GarbageCanApi.Controllers
         /// Register User
         /// </summary>
         /// <param name="userModel"> Set Email, Password, UserName, FirstName, LastName </param>
-        /// <returns>user model filled with details of newly added user</returns>
+        /// <returns>a JWT token for logged in user</returns>
         /// <response code="200">User added successfully </response>
         /// <response code="400">Error while Adding User</response>
         /// <response code="500">Internal Server Error or Error while handshaking with database</response>
@@ -313,11 +313,11 @@ namespace GarbageCanApi.Controllers
         {
             try
             {
-                var user = ISecurityServices.CreateUser(userModel);
-                
+                var user = ISecurityServices.CreateUser(userModel);                
                 if (user != null)
                 {
-                    return Ok(user);
+                    var userToken = ISecurityServices.GenerateJSONWebToken(user);
+                    return Ok(new { token = userToken });
                 }
             }
             catch (Exception ex)
@@ -347,7 +347,6 @@ namespace GarbageCanApi.Controllers
             try
             {
                 var user = ISecurityServices.AuthenticateUser(userModel);
-
                 if (user != null)
                 {
                     var userToken = ISecurityServices.GenerateJSONWebToken(user);
