@@ -242,7 +242,7 @@
             <response code="200">temporary password send successfully </response>
             <response code="400">Error while sending temporary password to to user.</response>
         </member>
-        <member name="M:GarbageCanApi.Controllers.SecurityController.isUserExists(System.String)">
+        <member name="M:GarbageCanApi.Controllers.SecurityController.IsUserExists(System.String)">
             <summary>
             To Check if User Exists
             </summary>
@@ -292,7 +292,7 @@
             Register User
             </summary>
             <param name="userModel"> Set Email, Password, UserName, FirstName, LastName </param>
-            <returns>user model filled with details of newly added user</returns>
+            <returns>a JWT token for logged in user</returns>
             <response code="200">User added successfully </response>
             <response code="400">Error while Adding User</response>
             <response code="500">Internal Server Error or Error while handshaking with database</response>
