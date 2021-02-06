@@ -121,7 +121,7 @@ namespace GarbageCanApi.Controllers
                 var isVerificationCodeSent = ISecurityServices.SendVerificationEmail(userEmail);
                 if (isVerificationCodeSent)
                 {
-                    return StatusCode(200);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while sending verification code.");
             }
 
-            return BadRequest("Verification code not sent successfully or your account is waiting for approval. Please try again.");
+            return Ok(false);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace GarbageCanApi.Controllers
                 var isVerificationCodeSent = ISecurityServices.ForgetPassword(userEmail);
                 if (isVerificationCodeSent)
                 {
-                    return StatusCode(200);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -159,7 +159,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while sending forget password.");
             }
 
-            return BadRequest("Forget password's email not sent successfully. Please try again.");
+            return Ok(false);
         }
 
         /// <summary>
@@ -171,18 +171,18 @@ namespace GarbageCanApi.Controllers
         /// <response code="404">User Doesn't Exists </response>
         [HttpGet]
         [AllowAnonymous]
-        [Route("isUserExists/{userEmail}")]
+        [Route("IsUserExists/{userEmail}")]
         [ProducesResponseType(StatusCodes.Status302Found)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult isUserExists(string userEmail)
+        public IActionResult IsUserExists(string userEmail)
         {
             var isUserExists = ISecurityServices.IsUserEmailExists(userEmail);
             if (isUserExists)
             {
-                return StatusCode(302);
+                return Ok(true);
             }
 
-            return StatusCode(404);
+            return Ok(false);
         }
 
         /// <summary>
@@ -202,10 +202,10 @@ namespace GarbageCanApi.Controllers
             var isMosqueExists = ISecurityServices.IsUserNameExists(userName);
             if (isMosqueExists)
             {
-                return StatusCode(302);
+                return Ok(true);
             }
 
-            return StatusCode(404);
+            return Ok(false);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace GarbageCanApi.Controllers
                 var isUserVerified = ISecurityServices.VerifyUser(user.Email, user.VerificationCode);
                 if (isUserVerified)
                 {
-                    return StatusCode(200);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -235,7 +235,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while verifying user.");
             }
 
-            return BadRequest("User is not verified. Please try again.");
+            return Ok(false);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace GarbageCanApi.Controllers
                 var isPasswordChanged = ISecurityServices.ChangePassword(userModel.IdUser, userModel.Password);
                 if (isPasswordChanged)
                 {
-                    return StatusCode(200);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -265,7 +265,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while changing password.");
             }
 
-            return BadRequest("Changing password failed. Please try again");
+            return Ok(false);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while registering user.");
             }
 
-            return BadRequest("Adding user failed. Please try again.");
+            return Ok(false);
         }
 
         /// <summary>
