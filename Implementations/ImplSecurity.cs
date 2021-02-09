@@ -67,7 +67,7 @@ namespace GarbageCanApi.Implementations
                 userModel.Password = Encryption.Encrypt(userModel.Password);
 
                 //Set to false because user will verify through email
-                userModel.IsVerified = false;
+                userModel.IsVerified = userModel.IdRole != 3 ? true : false;
 
                 //Adding Role as Admin & Date
                 userModel.CreatedDate = DateTime.Now;
