@@ -23,5 +23,6 @@ namespace GarbageCanApi.Interfaces
         bool UpdateUserDetails(User userModel);
         bool IsUserEmailExists(string userEmailId);
         bool IsUserNameExists(string userName);
+        bool IsPasswordValid(string userId, string password);
     }
 }

@@ -80,6 +80,29 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// Getting true flag if old password is correct
+        /// </summary>
+        /// <param name="userId"> pass id of the user </param>
+        /// <param name="password"> old password of the user </param>
+        /// <returns>a flag 'true' or 'false' if old password matches from the database</returns>
+        /// <response code="200">If Password matched</response>
+        /// <response code="404">No Data Found</response>
+        [HttpGet]
+        [Authorize]
+        [Route("GetUserById/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetUserById(string userId, string password)
+        {
+            var user = ISecurityServices.IsPasswordValid(userId, password);
+            if (user)
+            {
+                return Ok(true);
+            }
+
+            return Ok(false);
+        }
+
+        /// <summary>
         /// Getting user by role id including User Name
         /// </summary>
         /// <param name="roleId"> pass role id of the user for details </param>

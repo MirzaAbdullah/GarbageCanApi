@@ -336,5 +336,12 @@ namespace GarbageCanApi.Implementations
                     NameRole = user.IdRoleNavigation.RoleName
                 }).SingleOrDefault();
         }
+
+        public bool IsPasswordValid(string userId, string password)
+        {
+            var userPassword = DbContext.Users.Where(user => user.IdUser == userId && user.Password == Encryption.Encrypt(password)).Select(user => user.Password).SingleOrDefault();
+
+            return string.IsNullOrEmpty(userPassword);
+        }
     }
 }
