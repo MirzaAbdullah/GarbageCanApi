@@ -89,9 +89,9 @@ namespace GarbageCanApi.Controllers
         /// <response code="404">No Data Found</response>
         [HttpGet]
         [Authorize]
-        [Route("GetUserById/{userId}")]
+        [Route("IsPasswordValid/{userId}/{password}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetUserById(string userId, string password)
+        public IActionResult IsPasswordValid(string userId, string password)
         {
             var user = ISecurityServices.IsPasswordValid(userId, password);
             if (user)

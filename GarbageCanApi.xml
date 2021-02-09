@@ -215,6 +215,16 @@
             <response code="302">Users Data</response>
             <response code="404">No Data Found</response>
         </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.GetUserById(System.String,System.String)">
+            <summary>
+            Getting true flag if old password is correct
+            </summary>
+            <param name="userId"> pass id of the user </param>
+            <param name="password"> old password of the user </param>
+            <returns>a flag 'true' or 'false' if old password matches from the database</returns>
+            <response code="200">If Password matched</response>
+            <response code="404">No Data Found</response>
+        </member>
         <member name="M:GarbageCanApi.Controllers.SecurityController.GetUserByRoleId(System.Int32)">
             <summary>
             Getting user by role id including User Name
