@@ -215,7 +215,7 @@
             <response code="302">Users Data</response>
             <response code="404">No Data Found</response>
         </member>
-        <member name="M:GarbageCanApi.Controllers.SecurityController.GetUserById(System.String,System.String)">
+        <member name="M:GarbageCanApi.Controllers.SecurityController.IsPasswordValid(System.String,System.String)">
             <summary>
             Getting true flag if old password is correct
             </summary>
@@ -269,6 +269,14 @@
             <returns>return 302 if mosque exists and 404 if mosque not exists</returns>
             <response code="302">Mosque Already Exists </response>
             <response code="404">Mosque Doesn't Exists </response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.SecurityController.DeactivateUserAccount(GarbageCanApi.Models.ViewModels.UserViewModel)">
+            <summary>
+            Deactivate the Account by passinig userId
+            </summary>
+            <param name="user"> Set idUser </param>
+            <returns>a flag to confirm that account is deactivated or not</returns>
+            <response code="200">User deactivated Successfully </response>
         </member>
         <member name="M:GarbageCanApi.Controllers.SecurityController.VerifyUser(GarbageCanApi.Models.ViewModels.UserViewModel)">
             <summary>
