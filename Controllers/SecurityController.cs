@@ -232,6 +232,35 @@ namespace GarbageCanApi.Controllers
         }
 
         /// <summary>
+        /// Deactivate the Account by passinig userId
+        /// </summary>
+        /// <param name="user"> Set idUser </param>
+        /// <returns>a flag to confirm that account is deactivated or not</returns>
+        /// <response code="200">User deactivated Successfully </response>
+        [HttpPut]
+        [Authorize]
+        [Route("DeactivateUserAccount")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeactivateUserAccount([FromBody] UserViewModel user)
+        {
+            try
+            {
+                var isUserVerified = ISecurityServices.DeactiveUserAccount(user.IdUser);
+                if (isUserVerified)
+                {
+                    return Ok(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while deactivating user.");
+            }
+
+            return Ok(false);
+        }
+
+        /// <summary>
         /// Verify User by passing verification code and Email sent in email.
         /// </summary>
         /// <param name="user"> Set Uemail and VerificationCode </param>

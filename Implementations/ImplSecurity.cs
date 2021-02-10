@@ -178,7 +178,7 @@ namespace GarbageCanApi.Implementations
             return DbContext
                 .Users
                 .Include(user => user.IdRoleNavigation)
-                .Where(user => user.IsVerified == true && user.IdRole != (int) EnumRoles.Roles.Admin)
+                .Where(user => user.IdRole != (int) EnumRoles.Roles.Admin)
                 .Select(user => new UserViewModel
                 {
                     IdUser = user.IdUser,
@@ -192,7 +192,7 @@ namespace GarbageCanApi.Implementations
                     CreatedDate = user.CreatedDate,
                     IdRole = user.IdRole,
                     NameRole = user.IdRoleNavigation.RoleName
-                });
+                }).OrderByDescending(date => date.CreatedDate).OrderByDescending(verify => verify.IsVerified);
         }
 
         public UserViewModel GetUserById(string userId)
@@ -342,6 +342,24 @@ namespace GarbageCanApi.Implementations
             var userPassword = DbContext.Users.Where(user => user.IdUser == userId && user.Password == Encryption.Encrypt(password)).Select(user => user.Password).SingleOrDefault();
 
             return string.IsNullOrEmpty(userPassword);
+        }
+
+        public bool DeactiveUserAccount(string userId)
+        {
+            var user = DbContext.Users.Where(user => user.IdUser == userId).SingleOrDefault();
+
+            if (user != null)
+            {
+                //Set isUserVerified Flag to true
+                user.IsVerified = false;
+
+                //Update the User Records in DB
+                DbContext.SaveChanges();
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
