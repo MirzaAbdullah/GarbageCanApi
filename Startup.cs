@@ -52,7 +52,7 @@ namespace GarbageCanApi
             // Add CORS
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                c.AddPolicy("AllowAll", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
             // Add application services DI
@@ -118,11 +118,11 @@ namespace GarbageCanApi
                 c.RoutePrefix = "docs";
             });
 
-            app.UseCors(options => options.AllowAnyOrigin());
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
 
