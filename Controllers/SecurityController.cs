@@ -2,14 +2,11 @@
 using GarbageCanApi.Models;
 using GarbageCanApi.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GarbageCanApi.Controllers
 {
@@ -18,7 +15,6 @@ namespace GarbageCanApi.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAll")]
     public class SecurityController : ControllerBase
     {
         private readonly ISecurity ISecurityServices;
