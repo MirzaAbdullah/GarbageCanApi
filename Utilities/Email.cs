@@ -21,24 +21,24 @@ namespace GarbageCanApi.Utilities
 
         public bool sendEmail(EmailViewModel email)
         {
-            if (Convert.ToBoolean(configuration["EmailCredentials:isEmailAllowed"]))
+            if (Convert.ToBoolean(configuration["EmailCredentialsOutlook:isEmailAllowed"]))
             {
                 try
                 {
                     MailMessage mail = new MailMessage();
                     SmtpClient SmtpServer = new SmtpClient();
 
-                    mail.From = new MailAddress(configuration["EmailCredentials:username"].ToString());
+                    mail.From = new MailAddress(configuration["EmailCredentialsOutlook:username"].ToString());
                     mail.To.Add(email.to);
                     mail.Subject = string.Format("{0} - GarbageCAN (Pvt.) Ltd", email.subject);
 
                     mail.IsBodyHtml = true;
                     mail.Body = email.body;
 
-                    SmtpServer.Host = configuration["EmailCredentials:smtpClient"].ToString();
-                    SmtpServer.Port = Convert.ToInt32(configuration["EmailCredentials:smtpPort"]);
+                    SmtpServer.Host = configuration["EmailCredentialsOutlook:smtpClient"].ToString();
+                    SmtpServer.Port = Convert.ToInt32(configuration["EmailCredentialsOutlook:smtpPort"]);
                     SmtpServer.UseDefaultCredentials = false;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential(configuration["EmailCredentials:username"].ToString(), configuration["EmailCredentials:password"].ToString());
+                    SmtpServer.Credentials = new System.Net.NetworkCredential(configuration["EmailCredentialsOutlook:username"].ToString(), configuration["EmailCredentialsOutlook:password"].ToString());
                     SmtpServer.EnableSsl = true;
 
                     SmtpServer.Send(mail);
