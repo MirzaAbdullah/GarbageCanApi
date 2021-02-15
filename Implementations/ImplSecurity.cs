@@ -161,7 +161,8 @@ namespace GarbageCanApi.Implementations
                 new Claim(JwtRegisteredClaimNames.Email, userModel.Email),
                 new Claim("userId", userModel.IdUser),
                 new Claim("userName", userModel.Name),
-                new Claim("uRoleId", userModel.IdRole.ToString())
+                new Claim("uRoleId", userModel.IdRole.ToString()),
+                new Claim("isVerified", userModel.IsVerified.ToString())
             };
 
             var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
