@@ -97,15 +97,6 @@
             <response code="200">User Details changed successfully </response>
             <response code="400">Error while changing user detail.</response>
         </member>
-        <member name="M:GarbageCanApi.Controllers.GarbageCanController.DeleteUserDetails(GarbageCanApi.Models.ViewModels.UserDetailsViewModel)">
-            <summary>
-            Delete User Details
-            </summary>
-            <param name="udModel"> Set user id only </param>
-            <returns>a flag to confirm user details is delete or not - 'true' if user details are successfully changed.</returns>
-            <response code="200">User Details changed successfully </response>
-            <response code="400">Error while changing user detail.</response>
-        </member>
         <member name="M:GarbageCanApi.Controllers.GarbageCanController.CreateUserDetails(GarbageCanApi.Models.ViewModels.UserDetailsViewModel)">
             <summary>
             Save User Details
@@ -115,6 +106,15 @@
             <response code="200">User added successfully </response>
             <response code="400">Error while Adding User</response>
             <response code="500">Internal Server Error or Error while handshaking with database</response>
+        </member>
+        <member name="M:GarbageCanApi.Controllers.GarbageCanController.DeleteUserDetails(System.String)">
+            <summary>
+            Delete User Details
+            </summary>
+            <param name="userId"> Set user id only </param>
+            <returns>a flag to confirm user details is delete or not - 'true' if user details are successfully changed.</returns>
+            <response code="200">User Details changed successfully </response>
+            <response code="400">Error while changing user detail.</response>
         </member>
         <member name="M:GarbageCanApi.Controllers.PickupRequestController.#ctor(GarbageCanApi.Interfaces.IPickupRequest,Microsoft.Extensions.Logging.ILogger{GarbageCanApi.Controllers.PickupRequestController})">
             <summary>
