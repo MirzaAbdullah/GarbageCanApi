@@ -12,7 +12,7 @@ namespace GarbageCanApi.Interfaces
         UserDetailsViewModel GetUserDetailsById(string userId);
         UserDetail CreateUserDetails(UserDetailsViewModel udModel);
         bool UpdateUserDetails(UserDetailsViewModel udModel);
-        bool DeleteUserDetails(UserDetailsViewModel udModel);
+        bool DeleteUserDetails(string userId);
         IEnumerable<RolesViewModel> ddlRoles();
         IEnumerable<Item> ddlItems();
     }

@@ -200,7 +200,7 @@ namespace GarbageCanApi.Implementations
             return DbContext
                 .Users
                 .Include(user => user.IdRoleNavigation)
-                .Where(user => user.IsVerified == true && user.IdRole != (int)EnumRoles.Roles.Admin)
+                .Where(user => user.IdRole != (int)EnumRoles.Roles.Admin && user.IdUser == userId)
                 .Select(user => new UserViewModel
                 {
                     IdUser = user.IdUser,
