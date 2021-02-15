@@ -53,9 +53,9 @@ namespace GarbageCanApi.Implementations
                }).ToList();
         }
 
-        public bool DeleteUserDetails(UserDetailsViewModel udModel)
+        public bool DeleteUserDetails(string userId)
         {
-            var userDetails = DbContext.UserDetails.Where(uDetails => uDetails.IdUser == udModel.IdUser).SingleOrDefault();
+            var userDetails = DbContext.UserDetails.Where(uDetails => uDetails.IdUser == userId).SingleOrDefault();
 
             if (userDetails != null)
             {

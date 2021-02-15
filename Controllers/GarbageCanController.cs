@@ -1,4 +1,5 @@
 ﻿using GarbageCanApi.Interfaces;
+using GarbageCanApi.Models;
 using GarbageCanApi.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -114,7 +115,7 @@ namespace GarbageCanApi.Controllers
                 var isUserDetailsUpdated = IGarbageCanServices.UpdateUserDetails(udModel);
                 if (isUserDetailsUpdated)
                 {
-                    return StatusCode(200);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -122,37 +123,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while updating user details.");
             }
 
-            return BadRequest("Changing user details failed. Please try again");
-        }
-
-        /// <summary>
-        /// Delete User Details
-        /// </summary>
-        /// <param name="udModel"> Set user id only </param>
-        /// <returns>a flag to confirm user details is delete or not - 'true' if user details are successfully changed.</returns>
-        /// <response code="200">User Details changed successfully </response>
-        /// <response code="400">Error while changing user detail.</response>
-        [HttpPut]
-        [Authorize]
-        [Route("DeleteUserDetails")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult DeleteUserDetails([FromBody] UserDetailsViewModel udModel)
-        {
-            try
-            {
-                var isUserDetailsDeleted = IGarbageCanServices.DeleteUserDetails(udModel);
-                if (isUserDetailsDeleted)
-                {
-                    return StatusCode(200);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while deleting user details.");
-            }
-
-            return BadRequest("Deleting user details failed. Please try again");
+            return Ok(false);
         }
 
         /// <summary>
@@ -185,7 +156,37 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while registering user details.");
             }
 
-            return BadRequest("Adding user details failed. Please try again.");
+            return Ok(new UserDetail());
+        }
+
+        /// <summary>
+        /// Delete User Details
+        /// </summary>
+        /// <param name="userId"> Set user id only </param>
+        /// <returns>a flag to confirm user details is delete or not - 'true' if user details are successfully changed.</returns>
+        /// <response code="200">User Details changed successfully </response>
+        /// <response code="400">Error while changing user detail.</response>
+        [HttpDelete]
+        [Authorize]
+        [Route("DeleteUserDetails/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeleteUserDetails(string userId)
+        {
+            try
+            {
+                var isUserDetailsDeleted = IGarbageCanServices.DeleteUserDetails(userId);
+                if (isUserDetailsDeleted)
+                {
+                    return Ok(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while deleting user details.");
+            }
+
+            return Ok(false);
         }
     }
 }
