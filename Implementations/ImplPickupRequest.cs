@@ -93,9 +93,9 @@ namespace GarbageCanApi.Implementations
         }
         public bool DeletePickupRequest(string requestId)
         {
-            var reqDateTime = DbContext.Requests.Where(req => req.IdRequest == requestId).Select(reqDateTime => reqDateTime.CreatedDate).SingleOrDefault();
+            var pickupStatus = DbContext.Requests.Where(req => req.IdRequest == requestId).Select(reqStatus => reqStatus.PickupStatus).SingleOrDefault();
 
-            if (DateTime.Compare(reqDateTime, DateTime.Now) <= 0)
+            if (pickupStatus == EnumPickupStatus.pickupStatus.InProcess.ToString())
             {
                 using (var transaction = DbContext.Database.BeginTransaction())
                 {
@@ -211,7 +211,7 @@ namespace GarbageCanApi.Implementations
                                     ItemCost = reqDetails.ItemCost,
                                     ItemWeight = reqDetails.ItemWeight
                                 }).ToList()
-                            }).ToList();
+                            }).OrderByDescending(order => order.CreatedDate).OrderByDescending(order => order.PickupDate).ToList();
         }
         public PickupRequestViewModel GetRequestsById(string requestId)
         {
