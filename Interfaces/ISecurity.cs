@@ -19,7 +19,7 @@ namespace GarbageCanApi.Interfaces
         User CreateUser(UserViewModel userModel);
         IEnumerable<UserViewModel> GetAllUsers();
         UserViewModel GetUserById(string userId);
-        UserViewModel GetUserByRoleId(int roleId);
+        IEnumerable<UserViewModel> GetUsersByRoleId(int roleId);
         bool UpdateUserDetails(User userModel);
         bool IsUserEmailExists(string userEmailId);
         bool IsUserNameExists(string userName);
