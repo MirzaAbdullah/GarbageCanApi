@@ -111,12 +111,12 @@ namespace GarbageCanApi.Controllers
         /// <response code="404">No Data Found</response>
         [HttpGet]
         [Authorize]
-        [Route("GetUserByRoleId/{roleId}")]
+        [Route("GetUsersByRoleId/{roleId}")]
         [ProducesResponseType(StatusCodes.Status302Found)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetUserByRoleId(int roleId)
+        public IActionResult GetUsersByRoleId(int roleId)
         {
-            var user = ISecurityServices.GetUserByRoleId(roleId);
+            var user = ISecurityServices.GetUsersByRoleId(roleId);
             if (user != null)
             {
                 return Ok(user);

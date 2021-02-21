@@ -316,7 +316,7 @@ namespace GarbageCanApi.Implementations
             return false;
         }
 
-        public UserViewModel GetUserByRoleId(int roleId)
+        public IEnumerable<UserViewModel> GetUsersByRoleId(int roleId)
         {
             return DbContext
                 .Users
@@ -335,7 +335,7 @@ namespace GarbageCanApi.Implementations
                     CreatedDate = user.CreatedDate,
                     IdRole = user.IdRole,
                     NameRole = user.IdRoleNavigation.RoleName
-                }).SingleOrDefault();
+                }).ToList();
         }
 
         public bool IsPasswordValid(string userId, string password)
