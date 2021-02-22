@@ -39,7 +39,6 @@ namespace GarbageCanApi.Controllers
         [Authorize]
         [Route("GetAllAssignPickupsByDriverId/{DriverId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAllAssignPickupsByDriverId(string DriverId)
         {
             try
@@ -55,7 +54,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while retrieving Assign Pickups By DriverId");
             }
 
-            return BadRequest("Retrieving Assign Pickups By DriverId failed. Please try again!");
+            return Ok(null);
         }
 
         /// <summary>
@@ -69,7 +68,6 @@ namespace GarbageCanApi.Controllers
         [Authorize]
         [Route("GetAssignPickupsById/{AssignId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAssignPickupsById(string AssignId)
         {
             try
@@ -85,7 +83,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while retrieving Assign Pickups By Assign Id");
             }
 
-            return BadRequest("Retrieving Assign Pickups By Assign Id failed. Please try again!");
+            return Ok(null);
         }
 
         /// <summary>
@@ -99,7 +97,6 @@ namespace GarbageCanApi.Controllers
         [Authorize]
         [Route("GetInProcAssignPickupsByDriverId/{DriverId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetInProcAssignPickupsByDriverId(string DriverId)
         {
             try
@@ -115,7 +112,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while retrieving In-Process Assign Pickups By Driver Id");
             }
 
-            return BadRequest("Retrieving In-Process Assign Pickups By Driver Id failed. Please try again!");
+            return Ok(null);
         }
 
         /// <summary>
@@ -129,7 +126,6 @@ namespace GarbageCanApi.Controllers
         [Authorize]
         [Route("AcceptAssignedRequestByDriver")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AcceptAssignedRequestByDriver([FromBody] AssignViewModel AssignModel)
         {
             try
@@ -145,7 +141,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while creating an Assign request");
             }
 
-            return BadRequest("Generating an assign request Failed. Please try again!");
+            return Ok(false);
         }
 
         /// <summary>
@@ -159,7 +155,6 @@ namespace GarbageCanApi.Controllers
         [Authorize]
         [Route("CreatePickupRequest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreatePickupRequest([FromBody] AssignViewModel AssignModel)
         {
             try
@@ -167,7 +162,7 @@ namespace GarbageCanApi.Controllers
                 var isAssignRequestGenerated = IAssignServices.AssignPickups(AssignModel.IdUser, AssignModel.ListRequestIds);
                 if (isAssignRequestGenerated)
                 {
-                    return Ok(isAssignRequestGenerated);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -175,7 +170,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while creating an Assign request");
             }
 
-            return BadRequest("Generating an assign request Failed. Please try again!");
+            return Ok(false);
         }
 
     }
