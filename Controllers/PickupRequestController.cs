@@ -129,7 +129,6 @@ namespace GarbageCanApi.Controllers
         [Authorize]
         [Route("UpdatePickupStatus")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult UpdatePickupStatus([FromBody] PickupRequestViewModel reqModel)
         {
             try
@@ -137,7 +136,7 @@ namespace GarbageCanApi.Controllers
                 var isPickupStatusChanged = IRequestServices.ChangeRequestStatus(reqModel.IdRequest, reqModel.PickupStatus);
                 if (isPickupStatusChanged)
                 {
-                    return StatusCode(200);
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
@@ -145,7 +144,7 @@ namespace GarbageCanApi.Controllers
                 _logger.LogError(ex, "Error while updating Pickup Status.");
             }
 
-            return BadRequest("Updating Pickup Status Failed. Please try again!");
+            return Ok(false);
         }
 
         /// <summary>
