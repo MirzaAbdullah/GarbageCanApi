@@ -328,9 +328,12 @@ namespace GarbageCanApi.Implementations
         }
         private RequestDetail SyncRequestDetailToRequestDetailViewModel(PickupRequestDetailsViewModel reqModel, RequestDetail reqDBModel)
         {
+            //Getting item Price from database
+            var itemPrice = DbContext.Items.Where(item => item.IdItem == reqModel.IdItem).Select(item => item.ItemPrice).SingleOrDefault();
+
             reqDBModel.IdRequestDetail = reqModel.IdRequestDetail;
             reqDBModel.IdRequest = reqModel.IdRequest;
-            reqDBModel.ItemCost = reqModel.ItemCost;
+            reqDBModel.ItemCost = reqModel.ItemWeight * itemPrice;
             reqDBModel.ItemWeight = reqModel.ItemWeight;
             reqDBModel.IdItem = reqModel.IdItem;
 
