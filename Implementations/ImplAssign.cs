@@ -101,7 +101,7 @@ namespace GarbageCanApi.Implementations
             return DbContext.Assigns
                 .Include(assign => assign.IdRequestNavigation)
                 .Include(assign => assign.IdUserNavigation)
-                .Where(assign => assign.IdUser == driverId)
+                .Where(assign => assign.IdUser == driverId && (assign.IdRequestNavigation.PickupStatus == EnumPickupStatus.pickupStatus.AssignedToDriver.ToString() || assign.IdRequestNavigation.PickupStatus == EnumPickupStatus.pickupStatus.OutForPickup.ToString()))
                 .Select(assign => new AssignViewModel { 
                     IdAssign = assign.IdAssign,
                     IdUser = assign.IdUser,
