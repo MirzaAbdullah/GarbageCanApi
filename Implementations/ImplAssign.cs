@@ -147,7 +147,13 @@ namespace GarbageCanApi.Implementations
                             ItemName = reqDetail.IdItemNavigation.ItemName,
                             ItemCost = reqDetail.ItemCost,
                             ItemWeight = reqDetail.ItemWeight
-                        }).ToList()
+                        }).ToList(),
+                        UserData = new User
+                        {
+                            FirstName = assign.IdRequestNavigation.IdUserNavigation.FirstName,
+                            LastName = assign.IdRequestNavigation.IdUserNavigation.LastName,
+                            UserDetails = DbContext.UserDetails.Where(userId => userId.IdUser == assign.IdRequestNavigation.IdUser).ToList()
+                        }
                     }
                 })
                 .ToList();
